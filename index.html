@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Diário de Elise</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <script src="assets/js/story.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+    <main class="game-container">
+        <div id="diary">
+            <div id="paginas-container">
+                <div class="page" id="left-page">
+                    <div class="watermark">O Diário de Elise</div>
+                    <div class="content">
+                        </div>
+                    <div class="footer-left">Joinville, Santa Catarina</div>
+                    <div class="footer-right">~*~</div>
+                </div>
+
+                <div class="page" id="right-page-container">
+                    <div id="pagina-de-baixo" class="pagina-direita-efeito"></div>
+                    <div id="pagina-que-vira" class="pagina-direita-efeito"></div>
+                </div>
+            </div>
+        </div>
+
+        <button id="options-btn" class="ui-button">Opções</button>
+    </main>
+
+    <div id="modal-overlay" class="hidden"></div>
+    <div id="options-modal" class="hidden">
+        <button id="close-modal-btn">&times;</button>
+        <div class="modal-content">
+            <h2>Opções</h2>
+            <section id="save-section">
+                <h3>Salvar Progresso</h3>
+                <ul class="slot-list">
+                    <li><span>Auto-Save: --/--/---- --:--</span> <button class="slot-btn" data-slot-type="auto" data-action="save">Salvar</button></li>
+                    <li><span>Slot 1: Vazio</span> <button class="slot-btn" data-slot="1" data-action="save">Salvar</button></li>
+                    <li><span>Slot 2: Vazio</span> <button class="slot-btn" data-slot="2" data-action="save">Salvar</button></li>
+                    <li><span>Slot 3: Vazio</span> <button class="slot-btn" data-slot="3" data-action="save">Salvar</button></li>
+                </ul>
+            </section>
+            <section id="load-section">
+                 <h3>Carregar Progresso</h3>
+                <ul class="slot-list">
+                    <li><span>Auto-Save: --/--/---- --:--</span> <button class="slot-btn" data-slot-type="auto" data-action="load">Carregar</button></li>
+                    <li><span>Slot 1: Vazio</span> <button class="slot-btn" data-slot="1" data-action="load">Carregar</button></li>
+                    <li><span>Slot 2: Vazio</span> <button class="slot-btn" data-slot="2" data-action="load">Carregar</button></li>
+                    <li><span>Slot 3: Vazio</span> <button class="slot-btn" data-slot="3" data-action="load">Carregar</button></li>
+                </ul>
+            </section>
+            <section id="game-actions-section">
+                <h3>Jogo</h3>
+                <button id="restart-btn">Reiniciar Jogo</button>
+            </section>
+            <section id="settings-section">
+                <h3>Configurações</h3>
+                <div class="setting-item">
+                    <label for="font-size-select">Tamanho da Fonte:</label>
+                    <select id="font-size-select">
+                        <option value="small">Pequeno</option>
+                        <option value="medium" selected>Médio</option>
+                        <option value="large">Grande</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label for="font-style-select">Estilo da Fonte:</label>
+                    <select id="font-style-select">
+                        <option value="diary">Fonte do Diário</option>
+                        <option value="standard">Fonte Padrão</option>
+                    </select>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
