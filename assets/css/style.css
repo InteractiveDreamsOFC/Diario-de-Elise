@@ -1,10 +1,10 @@
 /* =================================
-   1. CONFIGURAÇÕES GLOBAIS E TEMA
+   1. CONFIGURAções GLOBAIS E TEMA
    ================================= */
-
 @import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Caveat:wght@400;700&display=swap');
 
 :root {
+    /* ...suas variáveis continuam aqui... */
     --title-font: "Uncial Antiqua", cursive;
     --diary-font: "Caveat", cursive;
     --standard-font: Arial, sans-serif;
@@ -15,27 +15,93 @@
     --paper-color: #d8c9b3;
     --cover-color: #2a2a2a;
     --watermark-color: rgba(61, 43, 31, 0.08);
+
+    /* NOVAS CORES PARA AS FITAS */
+    --extras-color: #2e7d32;      /* Verde escuro */
+    --extras-hover-color: #43a047; /* Verde mais claro */
+    --notas-color: #c8922b;       /* Ocre/Dourado */
+    --notas-hover-color: #dca330;  /* Ocre mais claro */
+    --conquistas-color: #ad4c17;  /* Bronze/Laranja escuro */
+    --conquistas-hover-color: #bf571a; /* Bronze mais claro */
 }
 
-/* --- Reset e Estilos Base --- */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--diary-font); background-color: #1a1a1a; background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png'); color: var(--text-color); overflow: hidden; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* DEIXANDO O BODY SIMPLES */
+body {
+    font-family: var(--diary-font);
+    background-color: #1a1a1a;
+    background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
+    color: var(--text-color);
+    overflow: hidden;
+}
 
 
 /* =================================
    2. LAYOUT PRINCIPAL E DIÁRIO
    ================================= */
 
-.game-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-#diary { position: relative; width: 90vw; max-width: 1400px; height: 90vh; box-shadow: 0 20px 50px rgba(0,0,0,0.6); background-color: var(--cover-color); background-image: url('https://www.transparenttextures.com/patterns/large-leather.png'); border-radius: 8px; padding: 2.5%; }
-#diary::before { content: ''; position: absolute; top: 0; left: 50%; width: 20px; height: 100%; transform: translateX(-50%); background: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 15%, transparent 25%, transparent 75%, rgba(0,0,0,0.3) 85%, transparent 100%); z-index: 5; opacity: 0.8; }
-#paginas-container { position: relative; display: flex; width: 100%; height: 100%; box-shadow: inset 0 0 25px rgba(0,0,0,0.5); z-index: 10; }
+/* NOVO MÉTODO COM GRID */
+.game-container {
+    display: grid;
+    /* Divide a tela em 3 colunas:
+       1fr (espaço esquerdo) | auto (diário) | 2fr (espaço direito) */
+    grid-template-columns: 1fr auto 1.5fr;
+    align-items: center;
+    height: 100vh; /* Ocupa a altura total */
+}
+
+#diary {
+    /* Diz ao diário para ocupar a segunda coluna da grade */
+    grid-column: 2;
+
+    position: relative;
+    width: 90vw;
+    max-width: 1400px;
+    height: 90vh;
+    padding: 2.5%;
+    border-radius: 8px;
+    background-color: var(--cover-color);
+    background-image: url('https://www.transparenttextures.com/patterns/large-leather.png');
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+
+#diary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 20px;
+    height: 100%;
+    transform: translateX(-50%);
+    background: linear-gradient(to right,
+        transparent 0%,
+        rgba(0,0,0,0.3) 15%,
+        transparent 25%,
+        transparent 75%,
+        rgba(0,0,0,0.3) 85%,
+        transparent 100%);
+    opacity: 0.8;
+    z-index: 5;
+}
+
+#paginas-container {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0 0 25px rgba(0,0,0,0.5);
+    z-index: 10;
+}
 
 
 /* =================================
    3. ESTRUTURA E CONTEÚDO DAS PÁGINAS
    ================================= */
-
 .page {
     flex: 1 1 50%;
     position: relative;
@@ -46,67 +112,127 @@ body { font-family: var(--diary-font); background-color: #1a1a1a; background-ima
     background-image: url('https://www.transparenttextures.com/patterns/old-paper-2.png');
 }
 
-/* CORREÇÃO: Sombra interna para a página esquerda (lombada) */
 #left-page {
+    /* sombra interna para a página esquerda (lombada) */
     box-shadow: inset -10px 0px 15px -10px rgba(0, 0, 0, 0.4);
 }
 
 #right-page-container {
     padding: 0;
-    perspective: 2500px;
     background: none;
     box-shadow: none;
+    perspective: 2500px;
 }
-#right-page-container.em-primeiro-plano { z-index: 100; }
 
-.content { position: relative; z-index: 2; flex-grow: 1; text-align: justify; line-height: 2.2; font-size: 20px; overflow-y: auto; }
-#paginas-container h1 { font-family: var(--title-font); font-weight: normal; font-size: 2.5rem; margin-bottom: 2rem; line-height: 1.1; text-align: left; border-bottom: 1px solid rgba(61, 43, 31, 0.2); padding-bottom: 1rem; color: var(--text-color); }
-.face.verso .content h1 { color: #876d5c; }
-.watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--title-font); font-size: 3rem; white-space: nowrap; color: var(--watermark-color); z-index: 1; pointer-events: none; }
-.footer-left, .footer-right { position: absolute; bottom: 2.5rem; font-size: 1rem; color: #a89f8d; z-index: 2; font-family: var(--standard-font); font-style: italic; }
-.footer-left { left: 3.5rem; }
+#right-page-container.em-primeiro-plano {
+    z-index: 100;
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+    flex-grow: 1;
+    text-align: justify;
+    line-height: 2.2;
+    font-size: 20px;
+    overflow-y: auto;
+}
+
+#paginas-container h1 {
+    font-family: var(--title-font);
+    font-weight: normal;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    line-height: 1.1;
+    text-align: left;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(61, 43, 31, 0.2);
+    color: var(--text-color);
+}
+
+.face.verso .content h1 {
+    color: #876d5c;
+}
+
+.watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--title-font);
+    font-size: 3rem;
+    white-space: nowrap;
+    color: var(--watermark-color);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.footer-left,
+.footer-right {
+    position: absolute;
+    bottom: 2.5rem;
+    font-size: 1rem;
+    font-style: italic;
+    font-family: var(--standard-font);
+    color: #a89f8d;
+    z-index: 2;
+}
+
+.footer-left  { left: 3.5rem; }
 .footer-right { right: 3.5rem; }
 
 
 /* =================================
    4. ANIMAÇÕES E FACES
    ================================= */
-
 @keyframes virarPaginaSolida {
     from { transform: rotateY(0deg); }
     to   { transform: rotateY(-180deg); }
 }
 
-.pagina-direita-efeito { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform-origin: left; transform-style: preserve-3d; will-change: transform; }
-.pagina-topo { z-index: 10; }
+.pagina-direita-efeito {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: left;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.pagina-topo  { z-index: 10; }
 .pagina-fundo { z-index: 5; }
 
 .face {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0; left: 0;
     width: 100%;
     height: 100%;
     padding: 2.5rem 3.5rem;
-    backface-visibility: hidden;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    backface-visibility: hidden;
     background-color: var(--paper-color);
     background-image: url('https://www.transparenttextures.com/patterns/old-paper-2.png');
-    /* CORREÇÃO: Sombra interna para a página direita (lombada) */
+    /* sombra interna para a página direita (lombada) */
     box-shadow: inset 10px 0px 15px -10px rgba(0, 0, 0, 0.4);
 }
 
 .face.verso {
-    transform: rotateY(180deg);
     position: relative;
+    transform: rotateY(180deg);
 }
-.face.verso .watermark, .face.verso .footer-left, .face.verso .footer-right { position: absolute; }
+
+.face.verso .watermark,
+.face.verso .footer-left,
+.face.verso .footer-right {
+    position: absolute;
+}
 
 .virando {
     animation: virarPaginaSolida 1.2s ease-out forwards;
-    /* CORREÇÃO: A sombra agora é interna (inset) para um efeito de profundidade mais realista */
+    /* sombra interna (inset) para efeito de profundidade */
     box-shadow: inset -10px 0 25px -10px rgba(0,0,0,0.4);
 }
 
@@ -114,17 +240,174 @@ body { font-family: var(--diary-font); background-color: #1a1a1a; background-ima
 /* =================================
    5. ELEMENTOS DE INTERAÇÃO E MODAL
    ================================= */
-/* ... (O resto do CSS para o Modal e UI permanece o mesmo) ... */
-.choices { margin-top: 1rem; flex-shrink: 0; padding-top: 1rem; border-top: 1px solid rgba(61, 43, 31, 0.1); }
-.choices button { display: block; width: 100%; padding: 0.8rem 0; margin-bottom: 0.5rem; font-family: var(--diary-font); font-size: 22px; font-weight: bold; text-align: left; background: transparent; border: none; color: var(--link-color); cursor: pointer; transition: color 0.3s; }
-.choices button:hover { color: var(--link-hover-color); }
-.page-flipper { text-align: right; margin-top: auto; padding-top: 1rem; flex-shrink: 0; }
-.next-page-btn { font-family: var(--diary-font); font-size: 18px; font-weight: bold; background: none; border: none; color: var(--link-color); cursor: pointer; }
+.choices {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    flex-shrink: 0;
+    border-top: 1px solid rgba(61, 43, 31, 0.1);
+}
+
+.choices button {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    padding: 0.8rem 0;
+    font-family: var(--diary-font);
+    font-size: 22px;
+    font-weight: bold;
+    text-align: left;
+    background: transparent;
+    border: none;
+    color: var(--link-color);
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.choices button:hover {
+    color: var(--link-hover-color);
+}
+
+.page-flipper {
+    text-align: right;
+    margin-top: auto;
+    padding-top: 1rem;
+    flex-shrink: 0;
+}
+
+.next-page-btn {
+    font-family: var(--diary-font);
+    font-size: 18px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    color: var(--link-color);
+    cursor: pointer;
+    transition: color 0.3s; /* Adicionado para a transição da cor ser suave */
+}
+
+.next-page-btn:hover {
+    color: var(--link-hover-color); /* Altera apenas a cor do texto ao passar o mouse */
+}
+
 .hidden { display: none !important; }
-#options-btn { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background-color: rgba(255,255,255,0.8); color: #333; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; z-index: 2001; }
-#modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1999; }
-#options-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 600px; max-height: 80vh; background-color: #f0f0f0; color: #333; padding: 2rem; border-radius: 10px; z-index: 2000; overflow-y: auto; }
-#close-modal-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 2rem; line-height: 1; cursor: pointer; color: #888; }
-.modal-content section { margin-bottom: 1rem; border-top: 1px solid #ccc; padding-top: 1rem; }
+
+#diary {
+    position: relative; /* mantém como contexto */
+}
+
+/* ESTILO BASE PARA TODAS AS FITAS */
+.ribbon-btn {
+    position: absolute;
+    right: -4rem;
+    transform: none;
+    z-index: 5;
+    width: clamp(80px, 10vw, 110px);
+    height: clamp(40px, 8vh, 50px);
+    color: #fff;
+    font-family: var(--title-font);
+    
+    /* MUDANÇA 1: Fonte mais adaptável e padding horizontal reduzido */
+    font-size: clamp(10px, 1.4vw, 15px);
+    padding: 0.5em 0.6em; /* Padding horizontal diminuído para dar mais espaço ao texto */
+
+    text-align: center;
+    line-height: 1.2;
+    cursor: pointer;
+    clip-path: polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%);
+    border-radius: 0 0 10px 0;
+    box-shadow: 0 15px 15px rgba(0,0,0,0.4);
+    border: 2px solid #3a2b23;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+/* ANIMAÇÃO DE HOVER PARA TODAS AS FITAS */
+.ribbon-btn:hover {
+    transform: translateX(5px);
+}
+
+/* MUDANÇA 2: Posição vertical ajustada para aproximar as fitas */
+#options-btn {
+    top: 10%;
+    background-color: var(--link-color);
+}
+#options-btn:hover {
+    background-color: var(--link-hover-color);
+}
+
+#extras-btn {
+    top: 19%; /* Mais próximo (antes era 25%) */
+    background-color: var(--extras-color);
+}
+#extras-btn:hover {
+    background-color: var(--extras-hover-color);
+}
+
+#notas-btn {
+    top: 28%; /* Mais próximo (antes era 40%) */
+    background-color: var(--notas-color);
+}
+#notas-btn:hover {
+    background-color: var(--notas-hover-color);
+}
+
+#conquistas-btn {
+    top: 37%;
+    background-color: var(--conquistas-color);
+    font-size: clamp(12px, -1.2vw, 12px);
+}
+
+#conquistas-btn:hover {
+    background-color: var(--conquistas-hover-color);
+}
+
+#modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1999;
+}
+
+#options-modal {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    padding: 2rem;
+    background-color: #f0f0f0;
+    color: #333;
+    border-radius: 10px;
+    z-index: 2000;
+    overflow-y: auto;
+}
+
+#close-modal-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #888;
+}
+
+.modal-content section {
+    margin-bottom: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ccc;
+}
+
 .slot-list { list-style: none; }
-.slot-list li { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 0.5rem; background-color: #fff; border-bottom: 1px solid #eee; }
+
+.slot-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0.5rem;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}

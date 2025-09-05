@@ -162,6 +162,26 @@ document.addEventListener('DOMContentLoaded', () => {
         optionsBtn.addEventListener('click', abrirMenu);
         closeModalBtn?.addEventListener('click', fecharMenu);
         modalOverlay.addEventListener('click', fecharMenu);
+
+        // PLACEHOLDER PARA OS NOVOS BOTÕES
+        const extrasBtn = document.getElementById('extras-btn');
+        const notasBtn = document.getElementById('notas-btn');
+        const conquistasBtn = document.getElementById('conquistas-btn');
+
+        extrasBtn.addEventListener('click', () => {
+            console.log("Botão Extras clicado!");
+            // Futuramente, abrirá o modal de extras aqui.
+        });
+
+        notasBtn.addEventListener('click', () => {
+            console.log("Botão Notas clicado!");
+            // Futuramente, abrirá o modal de notas aqui.
+        });
+
+        conquistasBtn.addEventListener('click', () => {
+            console.log("Botão Conquistas clicado!");
+            // Futuramente, abrirá o modal de conquistas aqui.
+        });
     }
     
     init();
